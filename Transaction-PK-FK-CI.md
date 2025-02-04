@@ -566,3 +566,107 @@ CI의 핵심 목표는 버그를 신속하게 찾아 해결하고, 소프트웨�
 - 개발자의 생상성을 향상 시켜준다
 - 버그를 좀더 빠르게 발견하고 수정할 수 있다
 - 업데이트를 좀더 빠르게 할 수 있다
+
+#  jenkins란
+젠킨스는 소프트웨어 개발시 지속적으로 통합 서비스를 제공하는 툴이다
+CI(Continuous Integration)툴 이라고 표현한다
+다수의 개발자들이 하나의 프로그램을 개발할 때 버전 충돌을 방지하는 용도로 각자 작업한 내용들을 공유영역에 있는 저장소에 빈번히 업로드 함으로써 	지속적인 통합이 가능하도록 해준다
+
+# 젠킨스가 주는 이점
+코드의 변경과 함께 이뤄지는 이 같은 자동화된 빌드와 테스트 작업들은 다음과 같은 이점들을 가져다 준다.
+- 프로젝트 표준 컴파일 환경에서의 컴파일 오류 검출
+- 자동화 테스트 수행
+- 정적 코드를 분석하여 코딩 규약에 준수한지 확인
+- 프로파일링 툴을 이용한 소스 변경에 따른 성능 변화 감시
+- 결함 테스트 환경에 대한 배포작업
+- 
+이 외에도 젠킨스는 500여가지가 넘는 플러그인을 온라인으로 간단히 인스톨 할 수 있는 기능을 제공하고 있으며 파이썬과 같은 스크립트를 이용해 손쉽게 자신에게 필요한 기능을 추가 할 수도 있다
+
+# ArgoCD란
+ArgoCD는 gitOps방식으로 관리되는 Manifest(yaml)파일의 변경사항을 감시하며 현재 배포된 환경의 상태와 Github Manifest 파일에 정의된 상태를 동일하게 유지하는 역활이다
+![alt text](image.png)
+이전엔 Jenkins로 CD과정을 진행했을때는 SSH로 패키징된 파일을 컨테이너에 넘겨 주었다면 ArgoCD는 CD과정을 진행하는데 Kubernetes로 배포한다고 보면 된다
+
+**ArgoCD는 쿠버네티스의 구성 요소를 배포하기 위해서는 Manifest (ex).yaml 파일을 구성해 실행해야 하는데 이러한 파일들은 계속해서 변경되기 때문에 지속적인 관리가 필요하다**
+이를 간편하게 Git으로 관리하는 방식이 GitOps이고 GitOps를 실현시키며 Kubernetes에 배포하는 툴이 ArgoCD이다
+
+# GitHub Actions이란?
+GitHub Actions는 GitHub에서 제공하는 CI/CD 도구로, 코드 변경 시 자동으로 빌드, 테스트, 배포 등의 작업을 수행할 수 있다
+
+# GitHub Actions 기본개념
+- Workflow: 자동화 작업의 단위 (YAML 파일로 정의)
+- Job: 하나의 Workflow 내에서 실행되는 작업 단위
+- Step: Job 내에서 실행되는 개별 명령어
+- Runner: Workflow를 실행하는 환경 (GitHub 호스트 또는 자체 호스트 가능)
+- Event: Workflow를 트리거하는 GitHub 이벤트 (push, pull_request 등)
+
+# GitHub Actions 주요기능
+- **트리거(Event)**: push, pull_request, schedule(크론 스케줄러) 등
+- **러너(Runner)**: GitHub 제공(기본) 또는 자체 호스트 가능
+- **Marketplace 액션**: `actions/checkout@v3`, `actions/setup-java@v3` 같은 재사용 가능한 액션 사용 가능
+- **환경 변수 & 시크릿**: `env:`, `secrets.GITHUB_TOKEN` 활용 가능
+- **병렬 실행 및 의존성 설정** 가능
+
+# CASCADE란
+1. 참조 관계(기본키와 외래키의 관계)가 있을 경우 참조되는 데이터 자동으로 삭제 가능
+2. 자신이 참조하고 있는 테이블의 데이터가 삭제되면 자동으로 자신의 데이터 또한 삭제
+3. CASCADE 사용시 참조 무결성을 준수할 수 있음
+> **참조 무결성**
+> 
+> 마스터 테이블(DEPT)에는 해당 부서번호(DEPTNO)가 없는데, 슬레이브 테이블(EMP)에는 해당 부서번호가 있는 경우 참조무결성 위배
+
+# CASCADE의 종류
+- ON DELETE CASCADE: 부모 레코드가 삭제되면 연결된 자식 레코드도 자동으로 삭제
+- ON UPDATE CASCADE: 부모 레코드의 기본 키가 변경되면 연결된 자식 레코드의 기본 키도 자동으로 변경됨
+
+# 사용예시
+```
+CREATE TABLE parent (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+CREATE TABLE child (
+    id INT PRIMARY KEY,
+    parent_id INT,
+    name VARCHAR(50),
+    FOREIGN KEY (parent_id) REFERENCES parent(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+```
+
+# JPA에서의 CASCADE구현
+JPA에서는 `CascadeType`을 활용하여 엔터티 간의 연관된 작업을 자동화할 수 있다
+
+# CascadeType의 종류
+- ALL: 모든 작업을 전파함
+- PERSIST: 부모 엔티티를 저장할 때 자식 엔티티도 같이 저장함
+- MERGE: 부모 엔티티를 병합할 때 자식 엔티티도 같이 병합함
+- REMOVE: 부모 엔티티를 삭제할 때 자식 엔티티도 같이 삭제함
+- REFRESH: 부모 엔티티를 세로고침할 때 자식 엔티티도 같이 세로고침함
+- ETACH: 부모 엔터티가 detach될 때 자식 엔터티도 detach됨
+
+# 사용 예시
+```
+@Entity
+class Parent {
+    @Id @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Child> children = new ArrayList<>();
+}
+
+@Entity
+class Child {
+    @Id @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
+}
+```
