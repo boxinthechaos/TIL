@@ -1,7 +1,7 @@
 # MVC 패턴이란
 MVC 패턴이란 M(Mdel),V(View),C(Controller)라는 개념으로 역활을 나누어서 일련의 작업을 처리하는 방법
 
-# Mdel,View,Controller의 관계
+# Model,View,Controller의 관계
 Model,View,Controller이 무엇인지 알아보기 전에 이것들의 관계나 흐름을 알려주는 사진이다
 ![alt text](image-7.png)
 사용자가 Controller를 사용하게 되면 Model에게서 데이터를 받아오고 받아온 데이터를 View에서 시각적인 부분을 제어하는 사용자에게 전달한다

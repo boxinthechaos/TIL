@@ -20,6 +20,7 @@ fetch('http://localhost:4000/api', {
 
 하지만 서버는 이전과 동일한 응답을 보내주는 반면 브라우저는 아래와 같은 반응을 보인다
 > Access to fetch at ’http://localhost:4000/api’ from origin ’http://localhost:3000’ has been blocked by CORS policy: The value of the ‘Access-Control-Allow-Origin’ header in the response must not be the wildcard ’*’ when the request’s credentials mode is ‘include’.
+
 이는 요청에 인증 정보가 담겨있는 상태에서 다른 출처의 리소스를 요청하게 되면 브라우저는 CORS 정책 위반 여부를 검사하는 룰에 다음 두가지를 추가하여 검사하기 때문이다
 
 이는 요청에 인증 정보가 담겨있는 상태에서 다른 출처의 리소스를 요청하게 되면 브라우저는 CORS 정책 위반 여부를 검사하는 룰에 다음 두가지를 추가하여 검사하기 때문이다
