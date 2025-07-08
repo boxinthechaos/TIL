@@ -59,4 +59,10 @@ client_id=1 # 어떤 client인지를 id를 통해 Resouce Owner에게 알려주�
 ```
 향후 <span style="color : red;">redirect_uri 경로를 통해서 Resource Server는 client에게 임시비밀번호인 Authorization code를 제공</span>한다
 
+5. 클라이언트로부터 보낸 서비스 정보와, 리소스 로그인 서버에 등록된 서비스 정보를 비교한다
+![alt text](image-5.png)
+5.1 확인이 완료되면, Resource Server로 부터 전용 로그인 페이지로 이동하여 사용자에게 보여준다
+![alt text](image-6.png)
+![alt text](image-7.png)
 
+6. ID/PW를 적어서 로그인을 하게되면, client가 사용하려는 기능(scope)에 대해 Resource Owner의 동의(승인)을 요청한다
