@@ -66,3 +66,51 @@ client_id=1 # 어떤 client인지를 id를 통해 Resouce Owner에게 알려주�
 ![alt text](image-7.png)
 
 6. ID/PW를 적어서 로그인을 하게되면, client가 사용하려는 기능(scope)에 대해 Resource Owner의 동의(승인)을 요청한다
+![alt text](image-8.png)
+![alt text](image-9.png)
+
+> ## <center>info</center>
+> 
+> 위 이미지의 의미는 다음과 같다
+>
+><span style="color : skyblue"> "c9users.io라는 client(서비스,application)는 Resoure Owner를 대신해 해당 기능(scope)를 사용하려고 합니다. 동의하시겠습니까?"</span>
+>
+> 동의(Allow)를 누르는 것은 Resoure Owner는 Client가 해당 기능 사용에 위임(delegation)했다를 의미한다
+
+![alt text](image-10.png)
+
+6.1 Resource Owner가 Allow 버튼을 누르면 Resource Owner가 권한을 위임 했다는 승인이 Resource Server에 전달한다.
+
+![alt text](image-11.png)
+이로써 Resource Server가 가지는 정보는 다음과 같다
+   1. Client Id : Resource Owner와 연결된 client가 누구인지
+   2. Client Secret : Resource Owner와 연결된 client의 비밀번호
+   3. Redirect URL : (진짜)Client와 연결할 통로
+   4. user id : client와 연결된 Resource Owner의 id
+   5. scope : client가 Resource Owner 대신에 사용할 기능들
+
+
+7. 아무리 **Owner**가 **Client**에게 권한을 승인 했더라도 **Server가 허락하지 않았기 때문에** Resource Server도 Client에게 권한을 승인 하기위해** <span style = "color : red;">Authorization code</span>를 <span style = "color: blue;">Redirect URL</span>을 통해 사용자에게 응답을 보내고
+
+8. 다시 사용자는 그대로 Client에게 다시 보낸다.
+![alt text](image-12.png)
+![alt text](image-13.png)<br>
+이를 통해 client는 Resource Server가 보낸 Authorization code, "code = 3"를 Resource Owner통해 받는다
+![alt text](image-14.png)
+
+9. 이제 client가 Resource Server에게 직접 url을(클라이언트 아이디, 비밀번호, 인증코드 등등)보낸다
+![alt text](image-15.png)
+![alt text](image-16.png)
+10. 그럼 Resource Server는 Client가 전달한 정보들을 비교해서 일치한다면 Access Token을 발급한다 그리고 이제 필요 없어진 Authorization code는 지운다
+11. 그렇게 토큰을 받은 Client는 사용자에게 최종적으로 로그인이 완료되었다고 응답한다
+> **<center> Tip </center>**
+> OAuth의 목적은 최종적으로 Access Token을 발급하는 것이다
+
+![alt text](image-17.png)
+![alt text](image-18.png)
+
+이제 client는 Resource server의 api를 요청해 Resource Owner의 ID 혹은 프로필 정보를 사용할 수 있다
+
+![alt text](image-19.png)
+만약 Access Token이 만료되면 401에러가 나게 되는데 Refresh Token을 통해 Access Token을 재 발급 해주면 된다
+![alt text](image-20.png)
