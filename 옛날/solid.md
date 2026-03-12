@@ -91,7 +91,7 @@ Getter와 Setter는 클래스의 필드를 캡슐화하고, 외부에서 직접 
 ### Setter
 - 필드 값을 설정하는 메서드
 - 메서드 이름은 set + 필드 이름의 첫 글자를 대문자로 시작
-> Setter 남발하면 안되는 이유:https://github.com/boxinthechaos/REST-API
+> Setter 남발하면 안되는 이유:[https://github.com/boxinthechaos/REST-API](https://github.com/boxinthechaos/TIL/blob/main/%EC%98%9B%EB%82%A0/REST-API.md)
 
 ## Getter와 Setter의 장점
 1. 캡슐화 유지
